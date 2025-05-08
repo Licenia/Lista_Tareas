@@ -8,7 +8,7 @@ class GestorTareas {
         this.tabla = tabla.querySelector("tbody");
     }
 
-    agregarTarea(nombreTarea, opcionesEstado){
+    agregarTarea(nombreTarea, opcionesEstado, estadoSeleccionado = opcionesEstado[0]){
         const fila = document.createElement("tr");
 
         const celdaTarea = document.createElement("td");
@@ -22,13 +22,45 @@ class GestorTareas {
             const option = document.createElement("option");
             option.value = opcion;
             option.textContent = opcion;
+
+            if(opcion === estadoSeleccionado){
+                option.selected = true;
+            }
             select.appendChild(option);
         });
 
+        select.addEventListener("change", () => {
+            this.guardarLocalStorage();
+        })
+
+        
         celdaEstado.appendChild(select);
         fila.appendChild(celdaEstado);
-
+        
         this.tabla.appendChild(fila)
+        
+        celdaTarea.addEventListener("click", ()=>{
+            const tareaActual = celdaTarea.textContent; 
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.value = tareaActual;
+            celdaTarea.textContent = "";
+            celdaTarea.appendChild(input);
+            input.focus();
+            
+            input.addEventListener("blur", ()=>{
+                const nuevaTarea = input.value.trim() || tareaActual;
+                celdaTarea.textContent = nuevaTarea;
+                this.guardarLocalStorage();
+            })
+            
+            input.addEventListener("keydown", (e) =>{
+                if (e.key === "Enter") {
+                    input.blur();
+                }
+            }) 
+        })
     }
 
     agregarFilaEditable(opcionesEstado){
@@ -59,15 +91,62 @@ class GestorTareas {
             const valor = inputTarea.value.trim();
             if (valor !== "") {
                 this.tabla.removeChild(fila);
-
-                this.agregarTarea(valor, opcionesEstado),
-                
+                this.agregarTarea(valor, opcionesEstado);
                 this.agregarFilaEditable(opcionesEstado);
+                this.guardarLocalStorage();
+
             }
         })
     }
+
+    obtenerTareas(){
+        const tareas = [];
+        const filas = this.tabla.querySelectorAll("tr");
+
+        filas.forEach(fila => {
+            const nombre = fila.cells[0]?.textContent;
+            const estado = fila.cells[1]?.querySelector("select")?.value;
+
+            if (nombre && estado) {
+                tareas.push({nombre, estado})
+            }
+        });
+        return tareas;
+    }
+
+    guardarLocalStorage(){
+        const tareas = this.obtenerTareas();
+        localStorage.setItem("tareas", JSON.stringify(tareas));
+    }
+    
+    cargarLocalStorage(opcionesEstado){
+        const texto = localStorage.getItem("tareas");
+        try {
+            const datos = JSON.parse(texto);
+            if (Array.isArray(datos)) {
+                datos.forEach(tarea => {
+                    this.agregarTarea(tarea.nombre, opcionesEstado , tarea.estado);
+
+                })
+            }else{
+                console.warn("Los datoss en el localStorage no son un array:", datos);
+            }
+            
+        } catch (error) {
+         console.error("Error al parsear localStorage:", error);   
+        }
+    }
+    
 }
 
 const gestor = new GestorTareas("tablaTareas");
-gestor.agregarFilaEditable(["Completada", "Pendiente"])
+
+gestor.cargarLocalStorage(["Pendiente", "Completada"]);
+gestor.agregarFilaEditable(["Pendiente", "Completada"]);
+
+
+
+
+
+
 
