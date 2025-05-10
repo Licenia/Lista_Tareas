@@ -114,6 +114,26 @@ class GestorTareas {
         return tareas;
     }
 
+    buscarCategoria(){
+        const input= document.getElementById("buscarCategoria");
+        const buscador = input.value;
+        const filas = this.tabla.querySelectorAll("tr");
+
+        filas.forEach(fila => {
+            const estado = fila.cells[1]?.querySelector("select")?.value;
+
+            if(estado !== undefined){
+                if (buscador === "" ||buscador.toLowerCase() === estado.toLowerCase()) {
+                    fila.style.display="table-row"
+                }else{
+                    fila.style.display = "none";
+                }
+            }else{
+                console.error("No se pudo obtener el estado")
+            }
+        })
+    }
+
     guardarLocalStorage(){
         const tareas = this.obtenerTareas();
         localStorage.setItem("tareas", JSON.stringify(tareas));
@@ -145,6 +165,9 @@ gestor.cargarLocalStorage(["Pendiente", "Completada"]);
 gestor.agregarFilaEditable(["Pendiente", "Completada"]);
 
 
+
+const boton = document.getElementById("buscar");
+boton.addEventListener("click",() => gestor.buscarCategoria());
 
 
 
