@@ -1,0 +1,107 @@
+*,
+::before,
+::after{
+    box-sizing: border-box;
+    font-family: Quicksand;
+}
+
+:root{
+--colorfondo : #e3e0e3;
+--color-blanco: #fff;
+--color-boton: #000;
+}
+
+h1{
+text-align: center;
+}
+
+.container-search{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.container-search input{
+    border-radius: .5rem;
+    width: 50%;
+    padding: .8rem;
+    font-size: 1rem;
+    border: none;
+    background-color: var(--colorfondo);
+}
+
+.container-search input::placeholder{
+    color: var(--color-negro);
+}
+
+button{
+    background-color: var(--color-boton);
+    color: var(--color-blanco);
+    min-width: 10%;
+    justify-content: flex-end;
+    border-radius: .5rem;
+
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+.container-table{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+table{
+    width: 70%;
+    border-collapse: collapse;
+}
+
+tr th{
+    text-align: center;
+      padding: 0.5rem;
+
+}
+
+td{
+  text-align: left;
+}
+
+td input, td select {
+  padding: 0.5rem;
+  text-align: left;
+  font-size: 1rem;
+}
+
+
+input{
+    width: 100%;
+    border: none;
+}
+
+select{
+    border: none;
+    width: 100%;
+}
+
+td:focus, input:focus {
+  outline: none;
+}
+
+.pendiente{
+  background-color: rgb(255, 255, 147);
+}
+
+.completada{
+  background-color: lightgreen;
+}
+
+footer{
+  text-align: center;
+}
+
+
+
+

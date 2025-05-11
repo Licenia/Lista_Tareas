@@ -3,13 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css">
     <title>Lista de Tareas</title>
 </head>
 <body>
-  <div>
-    <input type="text" id="buscarCategoria" placeholder="Buscar por categoria">
+  <h1>Lista de Tareas</h1>
+  <div class="container-search">
+    <input type="text" id="buscarCategoria" placeholder="Buscar por categoria" autocomplete="off">
     <button id="buscar">Buscar</button>
   </div>
+  <div class="container-table">
     <table id="tablaTareas" border="1">
         <thead>
           <tr>
@@ -19,7 +28,8 @@
         </thead>
         <tbody>
         </tbody>
-      </table>
+      </table>  
+  </div>
       <script src="GestorTareas.js"></script>
 </body>
 </html>

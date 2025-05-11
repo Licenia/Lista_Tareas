@@ -29,10 +29,25 @@ class GestorTareas {
             select.appendChild(option);
         });
 
-        select.addEventListener("change", () => {
-            this.guardarLocalStorage();
-        })
+        select.classList.remove("pendiente", "completada");
+        if (estadoSeleccionado.toLowerCase() === "pendiente") {
+            select.classList.add("pendiente");
+        }else{
+            select.classList.add("completada")
+        }
 
+        select.addEventListener("change", () => {
+        const op = select.value;
+
+        select.classList.remove("pendiente", "completada");
+            if (op.toLowerCase() === "pendiente" ) {
+                select.classList.add("pendiente")
+            }else{
+                select.classList.add("completada");
+            }
+            this.guardarLocalStorage();
+        
+        });
         
         celdaEstado.appendChild(select);
         fila.appendChild(celdaEstado);
@@ -68,7 +83,8 @@ class GestorTareas {
 
         const celdaTarea = document.createElement("td");
         const inputTarea = document.createElement("input");
-        inputTarea.placeholder = "Escribe una tarea";
+
+        inputTarea.placeholder = "Añadir nueva tarea";
         celdaTarea.appendChild(inputTarea);
         fila.appendChild(celdaTarea);
 
@@ -81,6 +97,7 @@ class GestorTareas {
             option.textContent = opcion;
             select.appendChild(option);
         })
+        
         celdaEstado.appendChild(select);
         fila.appendChild(celdaEstado);
 
@@ -133,6 +150,8 @@ class GestorTareas {
             }
         })
     }
+
+
 
     guardarLocalStorage(){
         const tareas = this.obtenerTareas();
