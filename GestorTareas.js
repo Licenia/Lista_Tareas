@@ -76,6 +76,8 @@ class GestorTareas {
                 }
             }) 
         })
+
+        this.agregarIconoEliminar(fila);
     }
 
     agregarFilaEditable(opcionesEstado){
@@ -112,6 +114,29 @@ class GestorTareas {
                 this.agregarFilaEditable(opcionesEstado);
                 this.guardarLocalStorage();
 
+            }
+        })
+    }
+
+    agregarIconoEliminar(fila){
+        const icono = document.createElement("img");
+        icono.setAttribute("src", "./icono-eliminar.svg");
+        icono.setAttribute("alt", "Eliminar Tarea");
+        icono.classList.add("btn-eliminar");
+
+        const celdaIcono = document.createElement("td");
+        celdaIcono.appendChild(icono) 
+        fila.appendChild(celdaIcono);
+
+        icono.addEventListener("click", () =>{
+            fila.remove();
+            this.guardarLocalStorage();
+        })
+
+        icono.addEventListener("keydown", (e) =>{
+            if (e.key === "Delete") {
+                fila.remove()
+                 this.guardarLocalStorage();
             }
         })
     }

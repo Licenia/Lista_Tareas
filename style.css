@@ -98,9 +98,17 @@ td:focus, input:focus {
   background-color: lightgreen;
 }
 
-footer{
-  text-align: center;
+.btn-eliminar{
+  width: 2rem;
+  height: 2rem;
+  display: none;
+  cursor: pointer;
 }
+
+tr:hover .btn-eliminar{
+  display: inline;
+} 
+
 
 
 
